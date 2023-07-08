@@ -24,13 +24,15 @@
                     <span class="header-NavToggle_Bar"></span>
                 </button>
                 <div class="header-Nav_Inner" id="global-Nav" aria-hidden="true">
-                    <ul class="header-Nav_Items">
-                        <li><a href="#">ホーム</a></li>
-                        <li><a href="#">コンセプト</a></li>
-                        <li><a href="#">ヘアスタイル</a></li>
-                        <li><a href="#">メニュー</a></li>
-                        <li><a href="#">店舗案内</a></li>
-                    </ul>
+                    <?php
+                        wp_nav_menu(
+                            array(
+                                'theme_location' => 'main-menu',
+                                'menu_class' => 'header-Nav_Items',
+                                'container' => false,
+                            )
+                        );
+                    ?>
                     <form role="search" method="get" class="search-form" action="#">
                         <label>
                             <input type="search" class="search-field" placeholder="検索 &hellip;" value="" name="s" />
