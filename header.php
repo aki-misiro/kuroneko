@@ -37,3 +37,10 @@
                 </div>
             </nav>
         </header>
+        <?php if ( !is_front_page() ) : ?>
+            <?php if ( function_exists( 'bcn_display' ) ) : ?>
+                <nav class="breadCrumb" typeof="BreadcrumbList" vocab="http://schema.org/" aria-label="現在のページ">
+                    <?php bcn_display(); ?>
+                </nav>
+            <?php endif; ?>
+        <?php endif; ?>
