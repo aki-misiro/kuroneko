@@ -3,6 +3,7 @@ function neko_theme_setup() {
    add_theme_support( 'title-tag' );
    add_theme_support( 'post-thumbnails' );
    add_image_size( 'page_eyecatch', 1100, 610, true );
+   add_image_size( 'archive_thumbnail', 200, 150, true );
 }
 add_action( 'after_setup_theme', 'neko_theme_setup' );
 
