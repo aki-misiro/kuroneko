@@ -162,3 +162,74 @@ function neko_register_block_patterns() {
    );
 }
 add_action( 'init', 'neko_register_block_patterns' );
+
+function neko_news_shortcode() {
+   $neko_news_html = '';
+   $neko_args       = array(
+       'post_type'      => 'post',
+       'posts_per_page' => 3,
+   );
+   $neko_news_query = new WP_Query( $neko_args );
+   if ( $neko_news_query->have_posts() ) {
+       $neko_news_html .= '<div class="row justify-content-center"><div class="col-lg-10">';
+       while ( $neko_news_query->have_posts() ) {
+           $neko_news_query->the_post();
+           $neko_post_class = get_post_class( 'module-Article_Item' );
+           $neko_category_list = get_the_category();
+           $neko_news_html .= '<article id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $neko_post_class ) ) . '">';
+           $neko_news_html .= '<a href="' . get_the_permalink() . '" class="module-Article_Item_Link">';
+           $neko_news_html .= '<div class="module-Article_Item_Img">';
+           if ( has_post_thumbnail() ) {
+               $neko_news_html .= get_the_post_thumbnail();
+           } else {
+               $neko_news_html .= '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/img/dummy-image.png" alt="" width="200" height="150" load="lazy">';
+           }
+           $neko_news_html .= '</div>';
+           $neko_news_html .= '<div class="module-Article_Item_Body">';
+           $neko_news_html .= '<h2 class="module-Article_Item_Title">' . get_the_title() . '</h2>';
+           $neko_news_html .= get_the_excerpt();
+           $neko_news_html .= '<ul class="module-Article_Item_Meta">';
+           if ( $neko_category_list ) {
+               $neko_news_html .= '<li class="module-Article_Item_Cat">' . esc_html( $neko_category_list[0]->name ) . '</li>';
+           }
+           $neko_news_html .= '<li class="module-Article_Item_Date">';
+           $neko_news_html .= '<time datetime="' . get_the_date( 'Y-m-d' ) . '">' . get_the_date() . '</time>';
+           $neko_news_html .= '</li></ul></div></a></article>';
+       }
+       wp_reset_postdata();
+       $neko_news_html .= '</div></div>';
+   }
+   return $neko_news_html;
+}
+add_shortcode( 'neko_news_recently', 'neko_news_shortcode' );
+
+function neko_hair_styles_shortcode() {
+   $neko_hairstyles_html = '';
+   $neko_args             = array(
+       'post_type'      => 'hairstyles',
+       'posts_per_page' => 4,
+   );
+   $neko_hairstyles_query = new WP_Query( $neko_args );
+   if ( $neko_hairstyles_query->have_posts() ) {
+       $neko_hairstyles_html .= '<div class="row">';
+       while ( $neko_hairstyles_query->have_posts() ) {
+           $neko_hairstyles_query->the_post();
+           $neko_post_class = get_post_class( 'module-Style_Item' );
+           $neko_hairstyles_html .= '<div class="col-6 col-md-3">';
+           $neko_hairstyles_html .= '<div id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', $neko_post_class ) ) . '">';
+           $neko_hairstyles_html .= '<a href="' . get_the_permalink() . '" class="module-Style_Item_Link" title="' . get_the_title() . '">';
+           $neko_hairstyles_html .= '<figure class="module-Style_Item_Img">';
+           if ( has_post_thumbnail() ) {
+               $neko_hairstyles_html .= get_the_post_thumbnail();
+           }
+           $neko_hairstyles_html .= '</figure>';
+           $neko_hairstyles_html .= '</a>';
+           $neko_hairstyles_html .= '</div>';
+           $neko_hairstyles_html .= '</div>';
+       }
+       wp_reset_postdata();
+       $neko_hairstyles_html .= '</div>';
+   }
+   return $neko_hairstyles_html;
+}
+add_shortcode( 'neko_hairstyles_recently', 'neko_hair_styles_shortcode' );
