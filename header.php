@@ -33,12 +33,14 @@
                             )
                         );
                     ?>
-                    <form role="search" method="get" class="search-form" action="#">
-                        <label>
-                            <input type="search" class="search-field" placeholder="検索 &hellip;" value="" name="s" />
-                        </label>
-                        <input type="submit" class="search-submit" value="検索" />
-                    </form>
+                    <?php get_search_form(); ?>
                 </div>
             </nav>
         </header>
+        <?php if ( !is_front_page() ) : ?>
+            <?php if ( function_exists( 'bcn_display' ) ) : ?>
+                <nav class="breadCrumb" typeof="BreadcrumbList" vocab="http://schema.org/" aria-label="現在のページ">
+                    <?php bcn_display(); ?>
+                </nav>
+            <?php endif; ?>
+        <?php endif; ?>
